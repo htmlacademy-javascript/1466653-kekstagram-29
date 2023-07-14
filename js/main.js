@@ -1,5 +1,4 @@
-import { createRandomImage } from './data.js';
+import { images } from './data.js';
+import { renderPictures } from './photo-previews.js';
 
-const imagesLength = 25;
-const images = Array.from({length: imagesLength}, createRandomImage);
-console.log(images);
+renderPictures(images);
