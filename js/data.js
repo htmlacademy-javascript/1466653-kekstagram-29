@@ -1,7 +1,6 @@
 import { getRandomInteger, getRandomArrayElement } from './utils.js';
-
-const imagesLength = 25;
-const commentsMaxLength = 30;
+const IMAGE_COUNT = 25;
+const COMMENTS_COUNT = 30;
 
 const commentTexts = [
   'Всё отлично!',
@@ -44,11 +43,13 @@ const getRandomComments = (maxLength) => {
 };
 
 const createRandomImage = () => ({
-  id: getRandomInteger(1, imagesLength),
-  url: `photos/${getRandomInteger(1, imagesLength)}.jpg`,
+  id: getRandomInteger(1, IMAGE_COUNT),
+  url: `photos/${getRandomInteger(1, IMAGE_COUNT)}.jpg`,
   description: getRandomArrayElement(imageDescriptions),
   likes: getRandomInteger(5, 200),
-  comments: getRandomComments(commentsMaxLength),
+  comments: getRandomComments(COMMENTS_COUNT),
 });
 
-export { createRandomImage };
+const images = Array.from({length: IMAGE_COUNT}, createRandomImage);
+
+export { images };
