@@ -1,21 +1,25 @@
-import { images } from './data.js';
-
 const pictureContainer = document.querySelector('.pictures');
 const pictureTemplate = document.querySelector('#picture').content.querySelector('.picture');
-const pictureListFragment = document.createDocumentFragment();
 
-images.forEach((image) => {
-  const picture = pictureTemplate.cloneNode(true);
-  const pictureImg = picture.querySelector('.picture__img');
-  const likes = picture.querySelector('.picture__likes');
-  const comments = picture.querySelector('.picture__comments');
+const renderPicture = (imageContent, container) => {
+  const pictureImg = container.querySelector('.picture__img');
+  pictureImg.src = imageContent.url;
+  pictureImg.alt = imageContent.description;
+  container.querySelector('.picture__likes').textContent = imageContent.likes;
+  container.querySelector('.picture__comments').textContent = imageContent.comments.length;
+};
 
-  pictureImg.src = image.url;
-  pictureImg.alt = image.description;
-  likes.textContent = image.likes;
-  comments.textContent = image.comments.length;
+const renderPictures = (images) => {
+  const pictureListFragment = document.createDocumentFragment();
 
-  pictureListFragment.append(picture);
-});
+  images.forEach((image) => {
+    const picture = pictureTemplate.cloneNode(true);
 
-pictureContainer.append(pictureListFragment);
+    renderPicture(image, picture);
+    pictureListFragment.append(picture);
+  });
+
+  pictureContainer.append(pictureListFragment);
+};
+
+export {renderPictures};
