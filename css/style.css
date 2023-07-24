@@ -366,6 +366,21 @@ main {
   outline: auto 5px highlight;
 }
 
+/* Ошибки валидации к описанию фотографии
+ ========================================================================== */
+.error-message {
+  display: block;
+  margin: 0 auto;
+  margin-top: -10px;
+  margin-bottom: 15px;
+  width: 450px;
+  color: #943106;
+  background-color: rgba(255, 255, 255, 0.45);
+  border-radius: 5px;
+  text-shadow: 0 0 20px rgba(255, 255, 255, 1);
+  /* -webkit-filter: drop-shadow(0 0 10px #fff);
+  filter: drop-shadow(0 0 10px #fff); */
+}
 
 /* Окно для редактирования изображения
    ========================================================================== */
