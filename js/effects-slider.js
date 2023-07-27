@@ -1,16 +1,16 @@
 import { Effects } from './picture-effects-settings.js';
 
 const picture = document.querySelector('.img-upload__preview img');
-const sliderContainer = document.querySelector('.effect-level');
 const effectsContainer = document.querySelector('.effects');
-const effectsSlider = document.querySelector('.effect-level__slider');
-const effectInput = document.querySelector('.effect-level__value');
+const sliderContainer = document.querySelector('.effect-level');
+const slider = sliderContainer.querySelector('.effect-level__slider');
+const sliderInput = sliderContainer.querySelector('.effect-level__value');
 
 let selectedEffect = Effects.none;
 let selectedEffectValue = Effects.none.min;
 const getEffectTitle = () => `${selectedEffect.filter}(${selectedEffectValue}${selectedEffect.unit ?? ''})`;
 
-noUiSlider.create(effectsSlider, {
+noUiSlider.create(slider, {
   range: {
     min: selectedEffect.min,
     max: selectedEffect.max,
@@ -25,14 +25,14 @@ const effectChangeHandler = (evt) => {
   sliderContainer.classList.remove('hidden');
   selectedEffectValue = selectedEffect.min;
   picture.style.filter = `${getEffectTitle()}`;
-  effectInput.value = selectedEffectValue;
+  sliderInput.value = selectedEffectValue;
 
   if(evt.target.value === 'none') {
     sliderContainer.classList.add('hidden');
     picture.style.filter = Effects.none.filter;
   }
 
-  effectsSlider.noUiSlider.updateOptions({
+  slider.noUiSlider.updateOptions({
     range: {
       min: selectedEffect.min,
       max: selectedEffect.max,
@@ -43,10 +43,10 @@ const effectChangeHandler = (evt) => {
 };
 
 const updateSliderHandler = () => {
-  selectedEffectValue = effectsSlider.noUiSlider.get();
+  selectedEffectValue = slider.noUiSlider.get();
   picture.style.filter = `${getEffectTitle()}`;
-  effectInput.value = selectedEffectValue;
+  sliderInput.value = selectedEffectValue;
 };
 
 effectsContainer.addEventListener('change', effectChangeHandler);
-effectsSlider.noUiSlider.on('update', updateSliderHandler);
+slider.noUiSlider.on('update', updateSliderHandler);
