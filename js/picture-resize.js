@@ -1,9 +1,7 @@
-// import { Effects } from "./photo-effects.js";
-
 const controlSmaller = document.querySelector('.scale__control--smaller');
 const controlBigger = document.querySelector('.scale__control--bigger');
 const scaleValueInput = document.querySelector('.scale__control--value');
-const picture = document.querySelector('.img-upload__preview');
+const pictureContainer = document.querySelector('.img-upload__preview');
 
 const Scale = {
   MAX: 100,
@@ -15,7 +13,7 @@ let scaleValue = Scale.MAX;
 scaleValueInput.value = `${scaleValue}%`;
 
 const resizePicture = (val) => {
-  picture.style.transform = `scale(${val}%)`;
+  pictureContainer.style.transform = `scale(${val}%)`;
 };
 
 const scaleDecrement = () => {
