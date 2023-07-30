@@ -1229,7 +1229,8 @@ main {
 }
 
 .error__inner,
-.success__inner {
+.success__inner,
+.server-error__inner {
   position: relative;
   width: 600px;
   padding: 50px 20px;
@@ -1313,6 +1314,25 @@ main {
   opacity: 0.6;
 }
 
+.server-error {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  background-color: #3c3614;
+}
+
+.server-error__inner {
+  margin: 0 auto;
+  padding: 20px;
+  width: 90%;
+  background-color: transparent;
+}
+
+.server-error__title {
+  margin: 0;
+  font-size: 32px;
+}
 
 /**
  * Экран загрузки изображения
