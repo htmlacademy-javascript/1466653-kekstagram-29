@@ -1,5 +1,6 @@
 import { isEscapeKey } from './utils.js';
 import { uploadPhoto } from './fetch.js';
+// import { pictureChoseInputHandler } from './picture-preview.js';
 
 const form = document.querySelector('.img-upload__form');
 const hashtagsInput = form.querySelector('.text__hashtags');
@@ -8,6 +9,7 @@ const loadPopup = form.querySelector('.img-upload__overlay');
 const uploadInput = form.querySelector('.img-upload__input');
 const closeButton = form.querySelector('.img-upload__cancel');
 const commentFieldset = form.querySelector('.img-upload__text');
+// const pictureChoseInput = document.querySelector('.img-upload__input');
 
 const HashtagValid = {
   MIN_LENGTH: 2,

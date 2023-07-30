@@ -1,4 +1,4 @@
-import { renderPictures } from './picture-previews.js';
+import { renderPictures } from './picture-thumbnails.js';
 import { getRandomInteger } from './utils.js';
 
 const RANDOM_PICTURES_COUNT = 10;
