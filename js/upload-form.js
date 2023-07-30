@@ -34,7 +34,7 @@ const hashtagInputHandler = (evt) => {
 const openFormPopup = () => {
   loadPopup.classList.remove('hidden');
   document.body.classList.add('modal-open');
-  document.addEventListener('keydown', documentEscapeKeydownHandler);
+  document.addEventListener('keydown', popupEscapeKeydownHandler);
 };
 
 const closeFormPopup = () => {
@@ -42,7 +42,13 @@ const closeFormPopup = () => {
   pristine.reset();
   loadPopup.classList.add('hidden');
   document.body.classList.remove('modal-open');
-  document.removeEventListener('keydown', documentEscapeKeydownHandler);
+  document.removeEventListener('keydown', popupEscapeKeydownHandler);
+};
+
+const closeResultPopup = () => {
+  const popup = document.querySelector('.success') || document.querySelector('.error');
+  document.removeEventListener('keydown', popupEscapeKeydownHandler);
+  popup.remove();
 };
 
 const keydownStopPropagationHadler = (evt) => {
@@ -51,21 +57,15 @@ const keydownStopPropagationHadler = (evt) => {
   }
 };
 
-function documentEscapeKeydownHandler (evt) {
+function popupEscapeKeydownHandler (evt) {
   if(isEscapeKey(evt)) {
-    closeFormPopup();
+    closeResultPopup();
   }
 }
 
-const closeResultPopup = () => {
-  const popup = document.querySelector('.success') || document.querySelector('.error');
-  document.removeEventListener('keydown', documentEscapeKeydownHandler);
-  popup.remove();
-};
-
 const showUploadResultPopup = (popup) => {
   popup.querySelector('button').addEventListener('click', closeResultPopup);
-  document.addEventListener('keydown', documentEscapeKeydownHandler);
+  document.addEventListener('keydown', popupEscapeKeydownHandler);
   document.body.append(popup);
 };
 

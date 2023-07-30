@@ -1,5 +1,5 @@
-const controlSmaller = document.querySelector('.scale__control--smaller');
-const controlBigger = document.querySelector('.scale__control--bigger');
+import { debounce } from './utils.js';
+const controls = document.querySelector('.img-upload__scale');
 const scaleValueInput = document.querySelector('.scale__control--value');
 const pictureContainer = document.querySelector('.img-upload__preview');
 
@@ -16,21 +16,23 @@ const resizePicture = (val) => {
   pictureContainer.style.transform = `scale(${val}%)`;
 };
 
-const scaleDecrement = () => {
-  if (scaleValue > Scale.MIN) {
-    scaleValue -= Scale.STEP;
-    scaleValueInput.value = `${scaleValue}%`;
-    resizePicture(scaleValue);
+const setResize = (increment) => {
+  scaleValue = parseInt(scaleValueInput.value, 10) + (Scale.STEP * increment);
+
+  if (scaleValue < Scale.MIN || scaleValue > Scale.MAX) {
+    return;
   }
+
+  scaleValueInput.value = `${scaleValue}%`;
+  resizePicture(scaleValue);
 };
 
-const scaleIncrement = () => {
-  if (scaleValue < Scale.MAX) {
-    scaleValue += Scale.STEP;
-    scaleValueInput.value = `${scaleValue}%`;
-    resizePicture(scaleValue);
+const controlButtonsClickHandler = debounce((evt) => {
+  if(evt.target.classList.contains('scale__control--smaller')) {
+    setResize(-1);
+  } else if (evt.target.classList.contains('scale__control--bigger')) {
+    setResize(1);
   }
-};
+});
 
-controlSmaller.addEventListener('click', scaleDecrement);
-controlBigger.addEventListener('click', scaleIncrement);
+controls.addEventListener('click', controlButtonsClickHandler);
