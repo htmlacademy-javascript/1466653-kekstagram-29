@@ -23,7 +23,6 @@ noUiSlider.create(slider, {
 const effectChangeHandler = (evt) => {
   selectedEffect = Effects[evt.target.value];
   sliderContainer.classList.remove('hidden');
-  // selectedEffectValue = selectedEffect.max;
   picture.style.filter = `${getEffectTitle()}`;
   sliderInput.value = selectedEffectValue;
 
