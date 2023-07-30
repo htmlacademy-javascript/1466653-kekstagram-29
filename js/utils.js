@@ -1,5 +1,8 @@
 const DEFAULT_TIMEOUT_DELAY = 500;
 
+const isEscapeKey = (evt) => evt.key === 'Escape';
+const isButton = (evt) => evt.tagName === 'BUTTON';
+
 const shuffleArray = (array) => {
   const newArray = array.slice();
 
@@ -20,7 +23,4 @@ const debounce = (callback, timeoutDelay = DEFAULT_TIMEOUT_DELAY) => {
   };
 };
 
-const isEscapeKey = (evt) => evt.key === 'Escape';
-const isButton = (evt) => evt.tagName === 'BUTTON';
-
-export {shuffleArray, isEscapeKey, isButton, debounce};
+export { isEscapeKey, isButton, shuffleArray, debounce};
