@@ -1,8 +1,26 @@
-const getRandomInteger = (min, max) => {
-  const rand = min + Math.random() * (max + 1 - min);
-  return Math.floor(rand);
+const DEFAULT_TIMEOUT_DELAY = 500;
+
+const shuffleArray = (array) => {
+  const newArray = array.slice();
+
+  for (let i = newArray.length - 1; i > 0; i--) {
+    const randomIndex = Math.floor(Math.random() * (i + 1));
+    [newArray[i], newArray[randomIndex]] = [newArray[randomIndex], newArray[i]];
+  }
+  return newArray;
+};
+
+const debounce = (callback, timeoutDelay = DEFAULT_TIMEOUT_DELAY) => {
+  let timeoutId;
+
+  return (...rest) => {
+    clearTimeout(timeoutId);
+
+    timeoutId = setTimeout(() => callback.apply(this, rest), timeoutDelay);
+  };
 };
 
 const isEscapeKey = (evt) => evt.key === 'Escape';
+const isButton = (evt) => evt.tagName === 'BUTTON';
 
-export {getRandomInteger, isEscapeKey};
+export {shuffleArray, isEscapeKey, isButton, debounce};

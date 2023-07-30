@@ -1,45 +1,36 @@
-import { renderPictures } from './picture-thumbnails.js';
-import { getRandomInteger } from './utils.js';
+import { renderPictures, removePictures } from './picture-thumbnails.js';
+import { shuffleArray, isButton, debounce } from './utils.js';
+import { pictures } from './main.js';
+
+const filtersForm = document.querySelector('.img-filters__form');
 
 const RANDOM_PICTURES_COUNT = 10;
+const BUTTON_ACTIVE_CLASS = 'img-filters__button--active';
 
-const sortPicturesByComments = (images) => {
-  const sortedPictures = images.slice();
-
-  sortedPictures.sort((a, b) => {
-    if (a.comments.length > b.comments.length) {
-      return 1;
-    }
-
-    if (a.comments.length < b.comments.length) {
-      return -1;
-    }
-
-    return 0;
-  });
-
-  renderPictures(sortedPictures);
+const filters = {
+  'filter-default': () => pictures.slice(),
+  'filter-discussed': () => pictures.slice().sort((a, b) => (b.comments.length - a.comments.length)),
+  'filter-random': () => shuffleArray(pictures.slice()).slice(0, RANDOM_PICTURES_COUNT),
 };
 
-const filterRandomPictures = (images) => {
-  console.log("консоль", images);
+const setFilterActive = (evt) => {
+  if(isButton) {
+    const selectedButton = filtersForm.querySelector(`.${BUTTON_ACTIVE_CLASS}`);
 
-  const randomPictures = [];
-  // const randomIndices = [];
+    if (selectedButton) {
+      selectedButton.classList.remove(BUTTON_ACTIVE_CLASS);
+    }
 
-  while (randomPictures.length <= RANDOM_PICTURES_COUNT) {
-    const randomIndex = getRandomInteger(0, images.length);
-
-    // if (randomIndices.includes(randomIndex)) {
-    //   continue;
-    // }
-
-    // randomIndices.push(randomIndex);
-    randomPictures.push(images[randomIndex]);
+    evt.target.classList.add(BUTTON_ACTIVE_CLASS);
   }
-  console.log("консоль random", randomPictures);
-
-  renderPictures(randomPictures);
 };
 
-export { sortPicturesByComments, filterRandomPictures };
+const filterFormClickHandler = debounce((evt) => {
+  if(isButton) {
+    removePictures();
+    renderPictures(filters[evt.target.id]());
+  }
+});
+
+filtersForm.addEventListener('click', setFilterActive);
+filtersForm.addEventListener('click', filterFormClickHandler);
