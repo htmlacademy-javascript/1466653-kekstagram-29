@@ -10,9 +10,7 @@ const renderComments = (comments, counter, container) => {
     loadButton.classList.add('hidden');
   }
 
-  document.querySelector('.social__comment-count').textContent = `
-    ${counter} из ${comments.length} комментариев
-  `;
+  document.querySelector('.social__comment-count').innerHTML = `${counter} из <span class="comments-count">${comments.length} комментариев</span>`;
 
   const commentsSelected = comments.slice(0, counter);
 

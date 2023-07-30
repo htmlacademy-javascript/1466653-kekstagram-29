@@ -23,13 +23,14 @@ noUiSlider.create(slider, {
 const effectChangeHandler = (evt) => {
   selectedEffect = Effects[evt.target.value];
   sliderContainer.classList.remove('hidden');
-  selectedEffectValue = selectedEffect.min;
+  // selectedEffectValue = selectedEffect.max;
   picture.style.filter = `${getEffectTitle()}`;
   sliderInput.value = selectedEffectValue;
 
   if(evt.target.value === 'none') {
     sliderContainer.classList.add('hidden');
     picture.style.filter = Effects.none.filter;
+    selectedEffectValue = selectedEffect.min;
   }
 
   slider.noUiSlider.updateOptions({
@@ -37,7 +38,7 @@ const effectChangeHandler = (evt) => {
       min: selectedEffect.min,
       max: selectedEffect.max,
     },
-    start: selectedEffect.min,
+    start: selectedEffect.max,
     step: selectedEffect.step,
   });
 };
