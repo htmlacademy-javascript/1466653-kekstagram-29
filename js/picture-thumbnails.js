@@ -1,6 +1,6 @@
 import { renderBigPicture } from './big-pictures.js';
 
-const pictureContainer = document.querySelector('.pictures');
+const picturesContainer = document.querySelector('.pictures');
 const pictureTemplate = document.querySelector('#picture').content.querySelector('.picture');
 
 const renderPicture = (imageContent, container) => {
@@ -28,7 +28,12 @@ const renderPictures = (images) => {
     pictureListFragment.append(picture);
   });
 
-  pictureContainer.append(pictureListFragment);
+  picturesContainer.append(pictureListFragment);
 };
 
-export {renderPictures};
+const removePictures = () => {
+  const picturesList = picturesContainer.getElementsByClassName('picture');
+  [...picturesList].forEach((picture) => picture.remove());
+};
+
+export {renderPictures, removePictures};
