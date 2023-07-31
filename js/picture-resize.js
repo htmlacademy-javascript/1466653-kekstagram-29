@@ -1,7 +1,7 @@
 import { debounce } from './utils.js';
 const controls = document.querySelector('.img-upload__scale');
 const scaleValueInput = document.querySelector('.scale__control--value');
-const pictureContainer = document.querySelector('.img-upload__preview');
+const pictureContainer = document.querySelector('.img-upload__preview img');
 
 const Scale = {
   MAX: 100,
@@ -13,7 +13,7 @@ let scaleValue = Scale.MAX;
 scaleValueInput.value = `${scaleValue}%`;
 
 const resizePicture = (val) => {
-  pictureContainer.style.transform = `scale(${val}%)`;
+  pictureContainer.style.transform = `scale(${val / 100})`;
 };
 
 const setResize = (increment) => {
