@@ -21,13 +21,21 @@ const closeButtonClickHandler = (evt) => {
   closeBigPicture();
 };
 
+
+function closeBigPicture () {
+  bigPicture.classList.add('hidden');
+  document.body.classList.remove('modal-open');
+  document.removeEventListener('keydown', documentEscapeKeydownHandler);
+}
+
 const renderBigPicture = (image) => {
+  const currentComments = image.comments.slice();
+  let commentsCounter = COMMENT_COUNT_STEP;
+
   bigPicture.querySelector('img').src = image.url;
   likesCount.textContent = image.likes;
   commentsCount.textContent = image.comments.length;
   pictureDescription.textContent = image.description;
-  const currentComments = image.comments.slice();
-  let commentsCounter = COMMENT_COUNT_STEP;
 
   renderComments(currentComments, commentsCounter, commentsContainer);
 
@@ -42,11 +50,5 @@ const renderBigPicture = (image) => {
   closeButton.addEventListener('click', closeButtonClickHandler);
   loadButton.addEventListener('click', loadCommentsClickHandler);
 };
-
-function closeBigPicture () {
-  bigPicture.classList.add('hidden');
-  document.body.classList.remove('modal-open');
-  document.removeEventListener('keydown', documentEscapeKeydownHandler);
-}
 
 export { renderBigPicture, closeButtonClickHandler };
