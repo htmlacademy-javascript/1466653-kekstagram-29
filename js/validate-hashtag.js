@@ -2,7 +2,7 @@ const HashtagValid = {
   MIN_LENGTH: 2,
   MAX_LENGTH: 20,
   MAX_NUMBER: 5,
-  REGEX: /^#\w{1,19}$/,
+  REGEX: /^#[0-9a-zа-яё]{1,19}$/,
 };
 const DESCRIPTION_MAX_LENGTH = 140;
 
@@ -19,6 +19,15 @@ const ErrorMessage = {
 let errorAlert = '';
 
 const getErrorMessage = () => errorAlert;
+
+const validateDescription = (value) => {
+  if (value.length > DESCRIPTION_MAX_LENGTH) {
+    errorAlert = ErrorMessage.DESCRIPTION_MAXLENGTH;
+    return false;
+  }
+  return true ;
+};
+
 const validateHashtag = (value) => {
   const hashtags = value.trim().toLowerCase();
 
@@ -66,4 +75,4 @@ const validateHashtag = (value) => {
   });
 };
 
-export { validateHashtag, getErrorMessage };
+export { validateHashtag, validateDescription, getErrorMessage };
