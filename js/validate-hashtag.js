@@ -19,6 +19,15 @@ const ErrorMessage = {
 let errorAlert = '';
 
 const getErrorMessage = () => errorAlert;
+
+const validateDescription = (value) => {
+  if (value.length > DESCRIPTION_MAX_LENGTH) {
+    errorAlert = ErrorMessage.DESCRIPTION_MAXLENGTH;
+    return false;
+  }
+  return true ;
+};
+
 const validateHashtag = (value) => {
   const hashtags = value.trim().toLowerCase();
 
@@ -66,4 +75,4 @@ const validateHashtag = (value) => {
   });
 };
 
-export { validateHashtag, getErrorMessage };
+export { validateHashtag, validateDescription, getErrorMessage };

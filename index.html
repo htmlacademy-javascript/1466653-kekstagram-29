@@ -120,8 +120,7 @@
                     <input class="text__hashtags" name="hashtags" placeholder="#ХэшТег">
                   </div>
                   <div class="img-upload__field-wrapper input-validate">
-                    <textarea class="text__description" name="description" placeholder="Ваш комментарий..." maxlength="140" data-pristine-maxlength-message="Максимальная длина комментария - 140 символов"></textarea>
-
+                    <textarea class="text__description" name="description" placeholder="Ваш комментарий..." maxlength="140"></textarea>
                   </div>
                 </fieldset>
 
@@ -219,20 +218,20 @@
 
 <!-- Сообщение с ошибкой загрузки изображения -->
     <template id="error">
-      <section class="error">
-        <div class="error__inner">
-          <h2 class="error__title">Ошибка загрузки файла</h2>
-          <button type="button" class="error__button">Попробовать ещё раз</button>
+      <section class="popup popup--error">
+        <div class="popup__inner">
+          <h2 class="popup__title">Ошибка загрузки файла</h2>
+          <button type="button" class="popup__button">Попробовать ещё раз</button>
         </div>
       </section>
     </template>
 
   <!-- Сообщение об успешной загрузке изображения -->
   <template id="success">
-    <section class="success">
-      <div class="success__inner">
-        <h2 class="success__title">Изображение успешно загружено</h2>
-        <button type="button" class="success__button">Круто!</button>
+    <section class="popup popup--success">
+      <div class="popup__inner">
+        <h2 class="popup__title">Изображение успешно загружено</h2>
+        <button type="button" class="popup__button">Круто!</button>
       </div>
     </section>
   </template>

@@ -1,6 +1,6 @@
 import { isEscapeKey } from './utils.js';
 import { uploadPhoto } from './fetch.js';
-import { validateHashtag, getErrorMessage } from './validate-hashtag.js';
+import { validateHashtag, validateDescription, getErrorMessage } from './validate-hashtag.js';
 
 const form = document.querySelector('.img-upload__form');
 const hashtagsInput = form.querySelector('.text__hashtags');
@@ -9,6 +9,7 @@ const loadPopup = form.querySelector('.img-upload__overlay');
 const uploadInput = form.querySelector('.img-upload__input');
 const closeButton = form.querySelector('.img-upload__cancel');
 const commentFieldset = form.querySelector('.img-upload__text');
+const descriptionInput = form.querySelector('.text__description');
 
 const pristine = new Pristine(form, {
   classTo: 'input-validate',
@@ -18,8 +19,9 @@ const pristine = new Pristine(form, {
 });
 
 pristine.addValidator(hashtagsInput, validateHashtag, getErrorMessage, 2, false);
+pristine.addValidator(descriptionInput, validateDescription, getErrorMessage, 2, false);
 
-const hashtagInputHandler = (evt) => {
+const validateInputHandler = (evt) => {
   evt.preventDefault();
 
   if (pristine.validate()) {
@@ -34,7 +36,7 @@ const hashtagInputHandler = (evt) => {
 const openFormPopup = () => {
   loadPopup.classList.remove('hidden');
   document.body.classList.add('modal-open');
-  document.addEventListener('keydown', popupEscapeKeydownHandler);
+  document.addEventListener('keydown', formEscapeKeydownHandler);
 };
 
 const closeFormPopup = () => {
@@ -42,13 +44,7 @@ const closeFormPopup = () => {
   pristine.reset();
   loadPopup.classList.add('hidden');
   document.body.classList.remove('modal-open');
-  document.removeEventListener('keydown', popupEscapeKeydownHandler);
-};
-
-const closeResultPopup = () => {
-  const popup = document.querySelector('.success') || document.querySelector('.error');
-  document.removeEventListener('keydown', popupEscapeKeydownHandler);
-  popup.remove();
+  document.removeEventListener('keydown', formEscapeKeydownHandler);
 };
 
 const keydownStopPropagationHadler = (evt) => {
@@ -57,11 +53,11 @@ const keydownStopPropagationHadler = (evt) => {
   }
 };
 
-function popupEscapeKeydownHandler (evt) {
-  if(isEscapeKey(evt)) {
-    closeResultPopup();
-  }
-}
+const closeResultPopup = () => {
+  const popup = document.querySelector('.success') || document.querySelector('.error');
+  document.removeEventListener('keydown', popupEscapeKeydownHandler);
+  popup.remove();
+};
 
 const showUploadResultPopup = (popup) => {
   popup.querySelector('button').addEventListener('click', closeResultPopup);
@@ -69,24 +65,36 @@ const showUploadResultPopup = (popup) => {
   document.body.append(popup);
 };
 
-const showUploadSuccessPopup = () => {
+const showSuccessPopup = () => {
   const popup = document.querySelector('#success').content.cloneNode(true);
   closeFormPopup();
   showUploadResultPopup(popup);
 };
 
-const showUploadErrorPopup = () => {
+const showErrorPopup = () => {
   const popup = document.querySelector('#error').content.cloneNode(true);
   showUploadResultPopup(popup);
 };
 
+function popupEscapeKeydownHandler (evt) {
+  if(isEscapeKey(evt)) {
+    closeResultPopup();
+  }
+}
+
+function formEscapeKeydownHandler (evt) {
+  if(isEscapeKey(evt)) {
+    closeFormPopup();
+  }
+}
+
 const formSubmitHandler = (evt) => {
   evt.preventDefault();
-  uploadPhoto(showUploadSuccessPopup, showUploadErrorPopup, new FormData(form));
+  uploadPhoto(showSuccessPopup, showErrorPopup, new FormData(form));
 };
 
 commentFieldset.addEventListener('keydown', keydownStopPropagationHadler);
 uploadInput.addEventListener('change', openFormPopup);
 closeButton.addEventListener('click', closeFormPopup);
-hashtagsInput.addEventListener('input', hashtagInputHandler);
+form.addEventListener('input', validateInputHandler);
 form.addEventListener('submit', formSubmitHandler);
