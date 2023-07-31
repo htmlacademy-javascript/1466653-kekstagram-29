@@ -79,12 +79,14 @@ const showUploadResultPopup = (popup) => {
 const showSuccessPopup = () => {
   const popup = document.querySelector('#success').content.cloneNode(true);
   closeFormPopup();
+  uploadButton.disabled = false;
   showUploadResultPopup(popup);
 };
 
 const showErrorPopup = () => {
   const popup = document.querySelector('#error').content.cloneNode(true);
   showUploadResultPopup(popup);
+  uploadButton.disabled = false;
   document.removeEventListener('keydown', formEscapeKeydownHandler);
 };
 
@@ -102,6 +104,7 @@ function formEscapeKeydownHandler (evt) {
 
 const formSubmitHandler = (evt) => {
   evt.preventDefault();
+  uploadButton.disabled = true;
   uploadPhoto(showSuccessPopup, showErrorPopup, new FormData(form));
 };
 
