@@ -10,16 +10,6 @@ let selectedEffect = Effects.none;
 let selectedEffectValue = Effects.none.min;
 const getEffectTitle = () => `${selectedEffect.filter}(${selectedEffectValue}${selectedEffect.unit ?? ''})`;
 
-noUiSlider.create(slider, {
-  range: {
-    min: selectedEffect.min,
-    max: selectedEffect.max,
-  },
-  start: selectedEffect.min,
-  step: selectedEffect.step,
-  connect: 'lower',
-});
-
 const effectChangeHandler = (evt) => {
   selectedEffect = Effects[evt.target.value];
   sliderContainer.classList.remove('hidden');
@@ -48,5 +38,25 @@ const updateSliderHandler = () => {
   sliderInput.value = selectedEffectValue;
 };
 
-effectsContainer.addEventListener('change', effectChangeHandler);
-slider.noUiSlider.on('update', updateSliderHandler);
+const createSlider = () => {
+  noUiSlider.create(slider, {
+    range: {
+      min: selectedEffect.min,
+      max: selectedEffect.max,
+    },
+    start: selectedEffect.min,
+    step: selectedEffect.step,
+    connect: 'lower',
+  });
+
+  sliderContainer.classList.add('hidden');
+  effectsContainer.addEventListener('change', effectChangeHandler);
+  slider.noUiSlider.on('update', updateSliderHandler);
+};
+
+const removeSlider = () => {
+  slider.noUiSlider.destroy();
+  effectsContainer.removeEventListener('change', effectChangeHandler);
+};
+
+export {createSlider, removeSlider};

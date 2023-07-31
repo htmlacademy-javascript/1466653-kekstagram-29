@@ -1,6 +1,7 @@
 import { isEscapeKey } from './utils.js';
 import { uploadPhoto } from './fetch.js';
 import { resizePicture, Scale } from './picture-resize.js';
+import { createSlider, removeSlider } from './effects-slider.js';
 import { validateHashtag, validateDescription, getErrorMessage } from './validate-hashtag.js';
 
 const form = document.querySelector('.img-upload__form');
@@ -35,6 +36,7 @@ const validateInputHandler = (evt) => {
 };
 
 const openFormPopup = () => {
+  createSlider();
   loadPopup.classList.remove('hidden');
   document.body.classList.add('modal-open');
   document.addEventListener('keydown', formEscapeKeydownHandler);
@@ -43,6 +45,7 @@ const openFormPopup = () => {
 const closeFormPopup = () => {
   form.reset();
   pristine.reset();
+  removeSlider();
   loadPopup.classList.add('hidden');
   document.body.classList.remove('modal-open');
   resizePicture(Scale.MAX);
