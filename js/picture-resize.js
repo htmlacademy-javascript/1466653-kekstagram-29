@@ -36,3 +36,5 @@ const controlButtonsClickHandler = debounce((evt) => {
 });
 
 controls.addEventListener('click', controlButtonsClickHandler);
+
+export {resizePicture, Scale};

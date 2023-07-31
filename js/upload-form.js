@@ -1,5 +1,6 @@
 import { isEscapeKey } from './utils.js';
 import { uploadPhoto } from './fetch.js';
+import { resizePicture, Scale } from './picture-resize.js';
 import { validateHashtag, validateDescription, getErrorMessage } from './validate-hashtag.js';
 
 const form = document.querySelector('.img-upload__form');
@@ -44,6 +45,7 @@ const closeFormPopup = () => {
   pristine.reset();
   loadPopup.classList.add('hidden');
   document.body.classList.remove('modal-open');
+  resizePicture(Scale.MAX);
   document.removeEventListener('keydown', formEscapeKeydownHandler);
 };
 
