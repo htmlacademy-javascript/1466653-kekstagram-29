@@ -46,9 +46,9 @@ const closeFormPopup = () => {
   form.reset();
   pristine.reset();
   removeSlider();
+  resizePicture(Scale.MAX);
   loadPopup.classList.add('hidden');
   document.body.classList.remove('modal-open');
-  resizePicture(Scale.MAX);
   document.removeEventListener('keydown', formEscapeKeydownHandler);
 };
 
@@ -59,13 +59,19 @@ const keydownStopPropagationHadler = (evt) => {
 };
 
 const closeResultPopup = () => {
-  const popup = document.querySelector('.success') || document.querySelector('.error');
   document.removeEventListener('keydown', popupEscapeKeydownHandler);
-  popup.remove();
+  document.querySelector('.popup').remove();
+};
+
+const overlayClickHandler = (evt) => {
+  if (!evt.target.classList.contains('popup__inner')) {
+    closeResultPopup();
+  }
 };
 
 const showUploadResultPopup = (popup) => {
   popup.querySelector('button').addEventListener('click', closeResultPopup);
+  document.addEventListener('click', overlayClickHandler);
   document.addEventListener('keydown', popupEscapeKeydownHandler);
   document.body.append(popup);
 };
@@ -79,6 +85,7 @@ const showSuccessPopup = () => {
 const showErrorPopup = () => {
   const popup = document.querySelector('#error').content.cloneNode(true);
   showUploadResultPopup(popup);
+  document.removeEventListener('keydown', formEscapeKeydownHandler);
 };
 
 function popupEscapeKeydownHandler (evt) {
