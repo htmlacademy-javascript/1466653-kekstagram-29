@@ -2,11 +2,18 @@ import './upload-form.js';
 import './picture-resize.js';
 import './effects-slider.js';
 import './picture-preview.js';
-import './picture-filters.js';
+import { filters, setActiveFilter } from './picture-filters.js';
+import { isButton, debounce } from './utils.js';
 import { requestPhotos } from './fetch.js';
-import { renderPictures } from './picture-thumbnails.js';
+import { renderPictures, removePictures } from './picture-thumbnails.js';
 
-export let pictures = [];
+const filtersForm = document.querySelector('.img-filters__form');
+let pictures = [];
+
+const showServerError = () => {
+  const template = document.querySelector('#server-error').content.cloneNode(true);
+  document.body.append(template);
+};
 
 const loadPictures = (data) => {
   pictures = data.slice();
@@ -14,9 +21,14 @@ const loadPictures = (data) => {
   document.querySelector('.img-filters').classList.remove('img-filters--inactive');
 };
 
-const showServerError = () => {
-  const template = document.querySelector('#server-error').content.cloneNode(true);
-  document.body.append(template);
-};
+const filterFormClickHandler = debounce((evt) => {
+  if(isButton) {
+    removePictures();
+    renderPictures(filters[evt.target.id](pictures));
+  }
+});
+
+filtersForm.addEventListener('click', setActiveFilter);
+filtersForm.addEventListener('click', filterFormClickHandler);
 
 requestPhotos(loadPictures, showServerError);

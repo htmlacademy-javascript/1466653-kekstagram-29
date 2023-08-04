@@ -1,7 +1,8 @@
+const IMAGE_TYPES = ['jpg', 'jpeg', 'png', 'webp', 'gif'];
+
 const pictureInput = document.querySelector('.img-upload__input');
 const picturePreview = document.querySelector('.img-upload__preview-img');
 const pictureThumbnailPreviews = document.querySelectorAll('.effects__preview');
-const IMAGE_TYPES = ['jpg', 'jpeg', 'png', 'webp', 'gif'];
 
 const pictureInputChangeHandler = () => {
   const file = pictureInput.files[0];

@@ -1,10 +1,11 @@
+const DESCRIPTION_MAX_LENGTH = 140;
+
 const HashtagValid = {
   MIN_LENGTH: 2,
   MAX_LENGTH: 20,
   MAX_NUMBER: 5,
   REGEX: /^#[0-9a-zа-яё]{1,19}$/,
 };
-const DESCRIPTION_MAX_LENGTH = 140;
 
 const ErrorMessage = {
   START_SYMBOL: 'Хештег должен начинаться с символа #',

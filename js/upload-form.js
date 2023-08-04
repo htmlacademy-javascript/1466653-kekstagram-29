@@ -52,6 +52,14 @@ const closeFormPopup = () => {
   document.removeEventListener('keydown', formEscapeKeydownHandler);
 };
 
+const uploadFileClickHandler = () => {
+  openFormPopup();
+};
+
+const closeButtonClickHandler = () => {
+  closeFormPopup();
+};
+
 const keydownStopPropagationHadler = (evt) => {
   if(isEscapeKey(evt)) {
     evt.stopPropagation();
@@ -63,6 +71,10 @@ const closeResultPopup = () => {
   document.querySelector('.popup').remove();
 };
 
+const popupButtonClickHandler = () => {
+  closeResultPopup();
+};
+
 const overlayClickHandler = (evt) => {
   if (!evt.target.classList.contains('popup__inner')) {
     closeResultPopup();
@@ -70,7 +82,7 @@ const overlayClickHandler = (evt) => {
 };
 
 const showUploadResultPopup = (popup) => {
-  popup.querySelector('button').addEventListener('click', closeResultPopup);
+  popup.querySelector('button').addEventListener('click', popupButtonClickHandler);
   document.addEventListener('click', overlayClickHandler);
   document.addEventListener('keydown', popupEscapeKeydownHandler);
   document.body.append(popup);
@@ -87,7 +99,6 @@ const showErrorPopup = () => {
   const popup = document.querySelector('#error').content.cloneNode(true);
   showUploadResultPopup(popup);
   uploadButton.disabled = false;
-  document.removeEventListener('keydown', formEscapeKeydownHandler);
 };
 
 function popupEscapeKeydownHandler (evt) {
@@ -97,7 +108,7 @@ function popupEscapeKeydownHandler (evt) {
 }
 
 function formEscapeKeydownHandler (evt) {
-  if(isEscapeKey(evt)) {
+  if(isEscapeKey(evt) && !document.querySelector('.popup')) {
     closeFormPopup();
   }
 }
@@ -109,7 +120,7 @@ const formSubmitHandler = (evt) => {
 };
 
 commentFieldset.addEventListener('keydown', keydownStopPropagationHadler);
-uploadInput.addEventListener('change', openFormPopup);
-closeButton.addEventListener('click', closeFormPopup);
+uploadInput.addEventListener('change', uploadFileClickHandler);
+closeButton.addEventListener('click', closeButtonClickHandler);
 form.addEventListener('input', validateInputHandler);
 form.addEventListener('submit', formSubmitHandler);

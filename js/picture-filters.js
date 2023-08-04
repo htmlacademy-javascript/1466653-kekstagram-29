@@ -1,19 +1,16 @@
-import { renderPictures, removePictures } from './picture-thumbnails.js';
-import { shuffleArray, isButton, debounce } from './utils.js';
-import { pictures } from './main.js';
-
-const filtersForm = document.querySelector('.img-filters__form');
+import { shuffleArray, isButton } from './utils.js';
 
 const RANDOM_PICTURES_COUNT = 10;
 const BUTTON_ACTIVE_CLASS = 'img-filters__button--active';
+const filtersForm = document.querySelector('.img-filters__form');
 
 const filters = {
-  'filter-default': () => pictures.slice(),
-  'filter-discussed': () => pictures.slice().sort((a, b) => (b.comments.length - a.comments.length)),
-  'filter-random': () => shuffleArray(pictures.slice()).slice(0, RANDOM_PICTURES_COUNT),
+  'filter-default': (pictures) => pictures.slice(),
+  'filter-discussed': (pictures) => pictures.slice().sort((a, b) => (b.comments.length - a.comments.length)),
+  'filter-random': (pictures) => shuffleArray(pictures.slice()).slice(0, RANDOM_PICTURES_COUNT),
 };
 
-const setFilterActive = (evt) => {
+const setActiveFilter = (evt) => {
   if(isButton) {
     const selectedButton = filtersForm.querySelector(`.${BUTTON_ACTIVE_CLASS}`);
 
@@ -25,12 +22,4 @@ const setFilterActive = (evt) => {
   }
 };
 
-const filterFormClickHandler = debounce((evt) => {
-  if(isButton) {
-    removePictures();
-    renderPictures(filters[evt.target.id]());
-  }
-});
-
-filtersForm.addEventListener('click', setFilterActive);
-filtersForm.addEventListener('click', filterFormClickHandler);
+export { filters, setActiveFilter };

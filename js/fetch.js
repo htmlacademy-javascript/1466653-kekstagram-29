@@ -5,7 +5,7 @@ const PhotoRequest = {
 
 const PhotoUpload = {
   method: 'POST',
-  link: 'https://29.javascript.pages.academy/kekstagram',
+  link: 'https://29.javascript.pages.academy/kekstagram1',
 };
 
 const fetchData = (link, onSuccess, onError, method = 'GET', body) => {

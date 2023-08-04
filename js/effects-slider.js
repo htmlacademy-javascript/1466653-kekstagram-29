@@ -8,6 +8,7 @@ const sliderInput = sliderContainer.querySelector('.effect-level__value');
 
 let selectedEffect = Effects.none;
 let selectedEffectValue = Effects.none.min;
+
 const getEffectTitle = () => `${selectedEffect.filter}(${selectedEffectValue}${selectedEffect.unit ?? ''})`;
 
 const effectChangeHandler = (evt) => {
