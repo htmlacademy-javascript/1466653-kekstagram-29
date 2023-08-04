@@ -2,6 +2,7 @@ import { renderComments } from './comments.js';
 import { isEscapeKey } from './utils.js';
 
 const COMMENT_COUNT_STEP = 5;
+
 const bigPicture = document.querySelector('.big-picture');
 const commentsContainer = bigPicture.querySelector('.social__comments');
 const likesCount = bigPicture.querySelector('.likes-count');
