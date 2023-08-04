@@ -21,14 +21,18 @@ const loadPictures = (data) => {
   document.querySelector('.img-filters').classList.remove('img-filters--inactive');
 };
 
-const filterFormClickHandler = debounce((evt) => {
-  if(isButton) {
-    removePictures();
-    renderPictures(filters[evt.target.id](pictures));
-  }
-});
+const renderFilteredPictures = (evt) => {
+  removePictures();
+  renderPictures(filters[evt.target.id](pictures));
+};
 
-filtersForm.addEventListener('click', setActiveFilter);
+const filterFormClickHandler = (evt) => {
+  if(isButton) {
+    setActiveFilter(evt);
+    debounce(renderFilteredPictures(evt));
+  }
+};
+
 filtersForm.addEventListener('click', filterFormClickHandler);
 
 requestPhotos(loadPictures, showServerError);
