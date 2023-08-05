@@ -68,17 +68,12 @@ const keydownStopPropagationHadler = (evt) => {
 
 const closeResultPopup = () => {
   document.removeEventListener('keydown', popupEscapeKeydownHandler);
+  document.removeEventListener('click', overlayClickHandler);
   document.querySelector('.popup').remove();
 };
 
 const popupButtonClickHandler = () => {
   closeResultPopup();
-};
-
-const overlayClickHandler = (evt) => {
-  if (!evt.target.classList.contains('popup__inner')) {
-    closeResultPopup();
-  }
 };
 
 const showUploadResultPopup = (popup) => {
@@ -110,6 +105,12 @@ function popupEscapeKeydownHandler (evt) {
 function formEscapeKeydownHandler (evt) {
   if(isEscapeKey(evt) && !document.querySelector('.popup')) {
     closeFormPopup();
+  }
+}
+
+function overlayClickHandler (evt) {
+  if (!evt.target.classList.contains('.popup__inner')) {
+    closeResultPopup();
   }
 }
 
