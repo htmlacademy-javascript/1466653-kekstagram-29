@@ -2,7 +2,7 @@ import { isEscapeKey } from './utils.js';
 import { uploadPhoto } from './fetch.js';
 import { resizePicture, Scale } from './picture-resize.js';
 import { createSlider, removeSlider } from './effects-slider.js';
-import { validateHashtag, validateDescription, getErrorMessage } from './validate-hashtag.js';
+import { validateHashtag, validateDescription, getErrorMessage } from './validators.js';
 
 const form = document.querySelector('.img-upload__form');
 const hashtagsInput = form.querySelector('.text__hashtags');
