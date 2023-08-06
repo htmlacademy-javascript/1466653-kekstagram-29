@@ -33,10 +33,10 @@ const renderFilteredPictures = (evt) => {
   renderPictures(filters[evt.target.id]());
 };
 
-const filterFormChangeHandler = debounce((evt) => {
+const filterFormClickHandler = debounce((evt) => {
   renderFilteredPictures(evt);
 });
 
-filtersForm.addEventListener('click', filterFormChangeHandler);
+filtersForm.addEventListener('click', filterFormClickHandler);
 
 requestPhotos(loadPictures, showServerError);
