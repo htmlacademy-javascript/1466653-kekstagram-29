@@ -151,7 +151,7 @@ main {
 }
 
 .img-filters__button:active,
-.img-filters__button--active {
+input:checked + .img-filters__button {
   color: #ff4e4e;
 
   background-color: #ffffff;

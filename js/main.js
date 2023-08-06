@@ -2,13 +2,20 @@ import './upload-form.js';
 import './picture-resize.js';
 import './effects-slider.js';
 import './picture-preview.js';
-import { filters, setActiveFilter } from './picture-filters.js';
-import { isButton, debounce } from './utils.js';
+import { shuffleArray, debounce } from './utils.js';
 import { requestPhotos } from './fetch.js';
 import { renderPictures, removePictures } from './picture-thumbnails.js';
 
+const RANDOM_PICTURES_COUNT = 10;
+
 const filtersForm = document.querySelector('.img-filters__form');
 let pictures = [];
+
+const filters = {
+  'filter-default': () => pictures.slice(),
+  'filter-discussed': () => pictures.slice().sort((a, b) => (b.comments.length - a.comments.length)),
+  'filter-random': () => shuffleArray(pictures.slice()).slice(0, RANDOM_PICTURES_COUNT),
+};
 
 const showServerError = () => {
   const template = document.querySelector('#server-error').content.cloneNode(true);
@@ -23,15 +30,12 @@ const loadPictures = (data) => {
 
 const renderFilteredPictures = (evt) => {
   removePictures();
-  renderPictures(filters[evt.target.id](pictures));
+  renderPictures(filters[evt.target.id]());
 };
 
-const filterFormClickHandler = (evt) => {
-  if(isButton) {
-    setActiveFilter(evt);
-    debounce(renderFilteredPictures(evt));
-  }
-};
+const filterFormClickHandler = debounce((evt) => {
+  renderFilteredPictures(evt);
+});
 
 filtersForm.addEventListener('click', filterFormClickHandler);
 

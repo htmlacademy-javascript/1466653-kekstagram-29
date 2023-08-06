@@ -109,7 +109,7 @@ function formEscapeKeydownHandler (evt) {
 }
 
 function overlayClickHandler (evt) {
-  if (!evt.target.classList.contains('.popup__inner')) {
+  if (!evt.target.classList.contains('popup__inner')) {
     closeResultPopup();
   }
 }
